@@ -34,9 +34,9 @@ jobs:
               uses: docker/metadata-action@v5.2.0
               with:
                 images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-                tag-semver: "{{ .Version }}"
-                tag-sha: "sha-{{ .Commit }}"
-                tag-edge: "latest"
+                tags: |
+                  type=edge,branch=main
+                  type=sha,prefix=
 
             - name: Build and push Docker image
               uses: docker/build-push-action@v6
@@ -44,8 +44,5 @@ jobs:
                 context: .
                 file: ./Dockerfile
                 push: true
-                tags: |
-                  ${{ steps.meta.outputs.tags }}
-                  ghcr.io/${{ github.repository }}:latest
-                  ghcr.io/${{ github.repository }}:${{ github.sha }}
-                visibility: public
+                tags: ${{ steps.meta.outputs.tags }}
+                labels: ${{ steps.meta.outputs.labels }}

@@ -8,7 +8,7 @@ on:
 
 env:
     REGISTRY: ghcr.io
-    IMAGE_NAME: ${{ github.repository }}
+    IMAGE_NAME_ORIGINAL: ${{ github.repository }}
 
 jobs:
     publish:
@@ -18,6 +18,9 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
+
+            - name: Set image name to lowecase
+            - run: echo "IMAGE_NAME=$(echo ${{ env.IMAGE_NAME_ORIGINAL }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
             - name: Log in to the Container registry
               uses: docker/login-action@v3.0.0

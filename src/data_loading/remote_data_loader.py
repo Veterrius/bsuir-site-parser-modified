@@ -12,7 +12,11 @@ class RemoteDataLoader(DataLoader):
 
     def load(self, data_container):
         headers = {"Content-Type": "application/json"}
-        data = {"source_url": data_container.source, "content": data_container.data}
+        data = {
+            "source_url": data_container.source, 
+            "content_type": ".md",
+            "content": data_container.data
+        }
         try:
             response = requests.post(
                 self.receiver_url, data=json.dumps(data), headers=headers

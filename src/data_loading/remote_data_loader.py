@@ -14,7 +14,7 @@ class RemoteDataLoader(DataLoader):
         headers = {"Content-Type": "application/json"}
         data = {
             "source_url": data_container.source,
-            "content_type": ".md",
+            "content_type": "text/markdown",
             "content": data_container.data,
         }
         try:
